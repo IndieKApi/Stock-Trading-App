@@ -1,0 +1,48 @@
+package com.example.demo.controller;
+
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import com.example.demo.entity.Inventory;
+import com.example.demo.entity.Stock;
+import com.example.demo.service.InventoryService;
+
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
+@RestController
+@RequestMapping("inventory")
+public class InventoryController {
+
+    private InventoryService inventoryService;
+
+    @GetMapping("/all/{userId}")
+    public ResponseEntity<List<Inventory>> getAllUserInventories(@PathVariable int userId) {
+        List<Inventory> inventories = inventoryService.getAllUserInventories(userId);
+        return ResponseEntity.ok(inventories);
+    }
+
+    @PostMapping("/new")
+    public ResponseEntity<String> createUserInventory(@RequestBody Inventory inventory) {
+        return ResponseEntity.ok(inventoryService.createUserInventory(inventory));
+    }
+    
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Inventory> updateUserInventory(@PathVariable int id, @RequestBody Inventory inventory) {
+        return ResponseEntity.ok(inventoryService.updateUserInventory(id,inventory));
+    }
+
+    @PostMapping("/add-stocks/{inventoryId}")
+    public ResponseEntity<Inventory> addStocksToInventory(@PathVariable int inventoryId, @RequestBody List<Stock> stocks) {
+        Inventory updatedInventory = inventoryService.addStocksToInventory(inventoryId, stocks);
+        return ResponseEntity.ok(updatedInventory);
+    }
+
+    @DeleteMapping("/remove-stock/{inventoryId}")
+    public ResponseEntity<Inventory> removeStockFromInventory(@PathVariable int inventoryId, @RequestParam String stockSymbol) {
+        Inventory updatedInventory = inventoryService.removeStockFromInventory(inventoryId, stockSymbol);
+        return ResponseEntity.ok(updatedInventory);
+    }
+}

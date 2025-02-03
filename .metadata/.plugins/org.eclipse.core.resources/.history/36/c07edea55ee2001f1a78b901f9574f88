@@ -1,0 +1,76 @@
+package com.example.demo;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.example.demo.entity.CompanyInfoResponse;
+import com.example.demo.entity.Inventory;
+import com.example.demo.entity.Stock;
+import com.example.demo.entity.StockSellDTO;
+import com.example.demo.openfeign.InventoryOpenFeign;
+import com.example.demo.repository.StockInventoryRepository;
+import com.example.demo.service.InventoryServiceImpl;
+
+@SpringBootTest
+class InventoryMicroserviceApplicationTests {
+
+	@Mock
+    private InventoryOpenFeign inventoryOpenFeign;
+
+    @Mock
+    private StockInventoryRepository inventoryRepository;
+
+    @InjectMocks
+    private InventoryServiceImpl inventoryService;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    void testRemoveStockFromInventory() {
+        // Prepare test data
+        Inventory inventory = new Inventory();
+        Stock stock = new Stock();
+        stock.setSymbol("AAPL");
+        stock.setQuantity(10);
+        inventory.getStocks().add(stock);
+        
+        CompanyInfoResponse companyInfoResponse = new CompanyInfoResponse();
+        companyInfoResponse.setPrice(150.0);
+        companyInfoResponse.setCompanyName("Apple Inc.");
+
+        // Mock repository and client responses
+        when(inventoryRepository.findById(anyInt())).thenReturn(inventory);
+        when(inventoryOpenFeign.getCompanyInfo(anyString())).thenReturn(companyInfoResponse);
+
+        // Call the method
+        StockSellDTO result = inventoryService.removeStockFromInventory(1, "AAPL", 5);
+
+        // Verify the result
+        assertEquals("AAPL", result.getStockSymbol());
+        assertEquals(5, result.getStockQuantity());
+
+        // Verify interactions
+        verify(inventoryRepository, times(1)).findById(anyInt());
+        verify(inventoryOpenFeign, times(1)).getCompanyInfo(anyString());
+        verify(inventoryRepository, times(1)).save(any(Inventory.class));
+    }
+
+}

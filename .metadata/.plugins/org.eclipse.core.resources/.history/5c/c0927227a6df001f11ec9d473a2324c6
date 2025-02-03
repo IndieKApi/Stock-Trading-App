@@ -1,0 +1,4 @@
+spring.application.name=StockMicroservice
+server.port = 9091
+spring.config.import=optional:configserver:http://localhost:2121
+

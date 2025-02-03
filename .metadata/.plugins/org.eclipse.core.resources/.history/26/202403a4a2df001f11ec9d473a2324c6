@@ -1,0 +1,3 @@
+spring.application.name=ConfigServer
+server.port = 2121
+spring.cloud.config.server.git.skip-ssl-validation=true

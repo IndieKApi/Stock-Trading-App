@@ -1,0 +1,8 @@
+package com.example.demo.openfeign;
+
+import org.springframework.cloud.openfeign.FeignClient;
+
+@FeignClient("")
+public class OrderOpenFeignClient {
+
+}

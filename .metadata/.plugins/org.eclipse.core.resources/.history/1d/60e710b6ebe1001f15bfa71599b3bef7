@@ -1,0 +1,63 @@
+package com.example.demo.entity;
+
+//import com.fasterxml.jackson.annotation.JsonAlias;
+import lombok.Data;
+
+@Data
+public class StockPriceResponse {
+
+    private String symbol;
+
+    private String stockName;
+
+    private Double price;
+
+    private Double changesPercentage;
+
+    private Double change;
+
+    private Double dayLow;
+
+    private Double dayHigh;
+
+    private Double yearHigh;
+
+    private Double yearLow;
+
+    private Long marketCap;
+
+    private Double priceAvg50;
+
+    private Double priceAvg200;
+
+    private String exchange;
+
+    private Long volume;
+
+    private Long avgVolume;
+
+    private Double open;
+
+    private Double previousClose;
+
+    private Double eps;
+
+    private Double pe;
+
+    private String earningsAnnouncement;
+
+    private Long sharesOutstanding;
+
+    private Long timestamp;
+
+    @Override
+    public String toString() {
+        return "StockQuote [symbol=" + symbol + ", name=" + stockName + ", price=" + price + ", changesPercentage="
+                + changesPercentage + ", change=" + change + ", dayLow=" + dayLow + ", dayHigh=" + dayHigh
+                + ", yearHigh=" + yearHigh + ", yearLow=" + yearLow + ", marketCap=" + marketCap + ", priceAvg50="
+                + priceAvg50 + ", priceAvg200=" + priceAvg200 + ", exchange=" + exchange + ", volume=" + volume
+                + ", avgVolume=" + avgVolume + ", open=" + open + ", previousClose=" + previousClose + ", eps=" + eps
+                + ", pe=" + pe + ", earningsAnnouncement=" + earningsAnnouncement + ", sharesOutstanding="
+                + sharesOutstanding + ", timestamp=" + timestamp + "]";
+    }
+}

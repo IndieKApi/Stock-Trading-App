@@ -1,0 +1,19 @@
+spring.application.name=APIGateway
+
+server.port = 9150
+
+
+
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka/
+eureka.client.register-with-eureka=true
+eureka.client.fetch-registry=true
+ 
+management.endpoints.web.exposure.include=*
+ 
+spring.cloud.gateway.routes[0].id=STOCKMICROSERVICE
+spring.cloud.gateway.routes[0].uri=lb://STOCKMICROSERVICE
+spring.cloud.gateway.routes[0].predicates[0]=Path=/students/**
+ 
+spring.cloud.gateway.routes[1].id=COURSESERVICE
+spring.cloud.gateway.routes[1].uri=lb://COURSESERVICE
+spring.cloud.gateway.routes[1].predicates[0]=Path=/courses/**

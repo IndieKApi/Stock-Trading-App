@@ -1,0 +1,69 @@
+package com.example.demo.entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+public class CompanyProfile {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String symbol;
+    private Double price;
+    private Double beta;
+    private Long volAvg;
+    private Long mktCap;
+    private Double lastDiv;
+    private String priceRange;
+    private Double changes;
+    private String companyName;
+    private String currency;
+    private String cik;
+    private String isin;
+    private String cusip;
+    private String exchange;
+    private String exchangeShortName;
+    private String industry;
+    private String website;
+    private String description;
+    private String ceo;
+    private String sector;
+    private String country;
+    private String fullTimeEmployees;
+    private String phone;
+    private String address;
+    private String city;
+    private String state;
+    private String zip;
+    private Double dcfDiff;
+    private Double dcf;
+    private String image;
+    private String ipoDate;
+    private Boolean defaultImage;
+    private Boolean isEtf;
+    private Boolean isActivelyTrading;
+    private Boolean isAdr;
+    private Boolean isFund;
+	@Override
+	public String toString() {
+		return "CompanyProfile [id=" + id + ", symbol=" + symbol + ", price=" + price + ", beta=" + beta + ", volAvg="
+				+ volAvg + ", mktCap=" + mktCap + ", lastDiv=" + lastDiv + ", priceRange=" + priceRange + ", changes="
+				+ changes + ", companyName=" + companyName + ", currency=" + currency + ", cik=" + cik + ", isin="
+				+ isin + ", cusip=" + cusip + ", exchange=" + exchange + ", exchangeShortName=" + exchangeShortName
+				+ ", industry=" + industry + ", website=" + website + ", description=" + description + ", ceo=" + ceo
+				+ ", sector=" + sector + ", country=" + country + ", fullTimeEmployees=" + fullTimeEmployees
+				+ ", phone=" + phone + ", address=" + address + ", city=" + city + ", state=" + state + ", zip=" + zip
+				+ ", dcfDiff=" + dcfDiff + ", dcf=" + dcf + ", image=" + image + ", ipoDate=" + ipoDate
+				+ ", defaultImage=" + defaultImage + ", isEtf=" + isEtf + ", isActivelyTrading=" + isActivelyTrading
+				+ ", isAdr=" + isAdr + ", isFund=" + isFund + "]";
+	}
+    
+    
+
+
+}

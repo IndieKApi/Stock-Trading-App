@@ -1,0 +1,73 @@
+package com.example.demo.service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.entity.Inventory;
+import com.example.demo.entity.Order;
+import com.example.demo.entity.Stock;
+import com.example.demo.entity.StockSellDTO;
+import com.example.demo.openfeign.OrderOpenFeignClient;
+import com.example.demo.repository.OrderRepository;
+
+
+
+@Service
+public class OrderServiceImpl implements OrderService {
+
+    @Autowired
+    private OrderOpenFeignClient portfolioClient;
+
+    @Autowired
+    private OrderRepository orderRepository;
+
+    @Override
+    public Order buyStock(int portfolioId,int userId, List<Stock> stock) {
+    	
+        portfolioClient.addStockToPortfolio(portfolioId, stock);
+
+        // Save the order details
+        Order order = new Order();
+        order.setUserId(userId);
+        order.setPortfolioId(portfolioId);
+        order.setStockSymbol(stock.get(0).getSymbol());
+        order.setStockName(stock.get(0).getName());
+        order.setOrderType("BUY");
+        order.setQuantity(stock.get(0).getQuantity());
+        order.setPrice(stock.get(0).getPurchasePrice());
+        order.setTimestamp(LocalDateTime.now());
+        
+        return orderRepository.save(order);
+    }
+
+    @Override
+    public Order sellStock(int portfolioId,int userId, String stockSymbol,int stockQuantity) {
+    	
+       
+    	StockSellDTO dto = portfolioClient.removeStockFromPortfolio(portfolioId, stockSymbol,stockQuantity);
+//         Save the order details
+        Order order = new Order();
+        
+        order.setUserId(userId);
+        order.setPortfolioId(portfolioId);
+        order.setStockSymbol(stockSymbol);
+        order.setStockName(dto.getStockname());
+        order.setOrderType("SELL");
+        order.setQuantity(stockQuantity);
+        order.setPrice(dto.getStocksellPrice());
+        order.setTimestamp(LocalDateTime.now());
+        
+        return orderRepository.save(order);
+        
+    }
+
+	@Override
+	public List<Order> getUserOrder(int userId) {
+		return orderRepository.findByUserId(userId);
+	}
+
+   
+}

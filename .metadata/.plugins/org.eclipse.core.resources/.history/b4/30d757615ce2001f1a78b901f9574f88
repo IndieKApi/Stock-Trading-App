@@ -1,0 +1,28 @@
+package com.example.demo.Logger;
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.springframework.stereotype.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+@Aspect
+@Component
+public class LoggerAspect {
+	
+	
+	 private static final Logger logger = LoggerFactory.getLogger(LoggerAspect.class)
+
+	    @Before("execution(* com.example.demo.service.StockServiceImpl.*(..))")
+	    public void logBeforeMethod(JoinPoint joinPoint) {
+	        logger.info("Executing method: {}", joinPoint.getSignature().getName());
+	    }
+
+	    @AfterReturning(pointcut = "execution(* com.example.demo.service.StockServiceImpl.*(..))", returning = "result")
+	    public void logAfterMethod(JoinPoint joinPoint, Object result) {
+	        logger.info("Method executed: {} with result: {}", joinPoint.getSignature().getName(), result);
+	    }
+
+}

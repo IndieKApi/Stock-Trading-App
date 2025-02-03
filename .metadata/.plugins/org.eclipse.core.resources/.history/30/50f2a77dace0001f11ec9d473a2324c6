@@ -1,0 +1,15 @@
+@FeignClient(name = "stockClient", url = "https://financialmodelingprep.com/api/v3")
+public interface StockClient {
+
+    @GetMapping("/stock/list?apikey=GoNth69FMMXmudWJGAslcUBtp04zdQCd")
+    List<Stock> getAllStocks();
+
+    @GetMapping("/profile/{ticker}?apikey=GoNth69FMMXmudWJGAslcUBtp04zdQCd")
+    CompanyProfile getCompanyProfile(@PathVariable("ticker") String ticker);
+
+    @GetMapping("/quote/{ticker}?apikey=GoNth69FMMXmudWJGAslcUBtp04zdQCd")
+    Quote getQuote(@PathVariable("ticker") String ticker);
+
+    @GetMapping("/historical-price-full/{ticker}?apikey=GoNth69FMMXmudWJGAslcUBtp04zdQCd")
+    HistoricalData getHistoricalData(@PathVariable("ticker") String ticker);
+}

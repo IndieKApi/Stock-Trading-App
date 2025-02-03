@@ -1,0 +1,86 @@
+package com.example.demo.entity;
+
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+
+@Data
+public class StockPriceResponse {
+
+    @JsonProperty("symbol")
+    private String symbol;
+
+    @JsonProperty("name")
+    private String name;
+
+    @JsonProperty("price")
+    private Double price;
+
+    @JsonProperty("changesPercentage")
+    private Double changesPercentage;
+
+    @JsonProperty("change")
+    private Double change;
+
+    @JsonProperty("dayLow")
+    private Double dayLow;
+
+    @JsonProperty("dayHigh")
+    private Double dayHigh;
+
+    @JsonProperty("yearHigh")
+    private Double yearHigh;
+
+    @JsonProperty("yearLow")
+    private Double yearLow;
+
+    @JsonProperty("marketCap")
+    private Long marketCap;
+
+    @JsonProperty("priceAvg50")
+    private Double priceAvg50;
+
+    @JsonProperty("priceAvg200")
+    private Double priceAvg200;
+
+    @JsonProperty("exchange")
+    private String exchange;
+
+    @JsonProperty("volume")
+    private Long volume;
+
+    @JsonProperty("avgVolume")
+    private Long avgVolume;
+
+    @JsonProperty("open")
+    private Double open;
+
+    @JsonProperty("previousClose")
+    private Double previousClose;
+
+    @JsonProperty("eps")
+    private Double eps;
+
+    @JsonProperty("pe")
+    private Double pe;
+
+    @JsonProperty("earningsAnnouncement")
+    private String earningsAnnouncement;
+
+    @JsonProperty("sharesOutstanding")
+    private Long sharesOutstanding;
+
+    @JsonProperty("timestamp")
+    private Long timestamp;
+
+    @Override
+    public String toString() {
+        return "StockQuote [symbol=" + symbol + ", name=" + name + ", price=" + price + ", changesPercentage="
+                + changesPercentage + ", change=" + change + ", dayLow=" + dayLow + ", dayHigh=" + dayHigh
+                + ", yearHigh=" + yearHigh + ", yearLow=" + yearLow + ", marketCap=" + marketCap + ", priceAvg50="
+                + priceAvg50 + ", priceAvg200=" + priceAvg200 + ", exchange=" + exchange + ", volume=" + volume
+                + ", avgVolume=" + avgVolume + ", open=" + open + ", previousClose=" + previousClose + ", eps=" + eps
+                + ", pe=" + pe + ", earningsAnnouncement=" + earningsAnnouncement + ", sharesOutstanding="
+                + sharesOutstanding + ", timestamp=" + timestamp + "]";
+    }
+}

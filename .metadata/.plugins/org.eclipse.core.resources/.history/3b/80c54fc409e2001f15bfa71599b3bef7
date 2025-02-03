@@ -1,0 +1,13 @@
+package com.example.demo.service;
+
+import java.util.List;
+
+import com.example.demo.entity.Order;
+import com.example.demo.entity.Stock;
+import com.example.demo.entity.StockSellDTO;
+
+public interface OrderService {
+    void buyStock(int portfolioId, List<Stock> stock);
+    void sellStock(int portfolioId, String stockSymbol, int stockQuantity);
+    Order saveOrder(Order order);
+}

@@ -1,0 +1,12 @@
+import java.util.List;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+@FeignClient(name = "stockClient", url = "https://financialmodelingprep.com/api/v3")
+public interface StockClient {
+
+	@GetMapping("/stock/list?apikey=GoNth69FMMXmudWJGAslcUBtp04zdQCd")
+    List<Stock> getAllStocks();
+}

@@ -1,0 +1,132 @@
+package com.example.demo.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.example.demo.entity.Inventory;
+import com.example.demo.entity.Stock;
+import com.example.demo.entity.StockPriceResponse;
+import com.example.demo.openfeign.InventoryOpenFeign;
+import com.example.demo.repository.StockInventoryRepository;
+
+@Service
+public class InventoryServiceImpl implements InventoryService {
+	
+	@Autowired
+	private InventoryOpenFeign inventoryOpenFeign;
+	
+    @Autowired
+    private StockInventoryRepository inventoryRepository;
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Inventory> getAllUserInventories(int userId) {
+    	
+        return inventoryRepository.findByUserId(userId);
+    }
+
+    @Override
+    @Transactional
+    public String createUserInventory(Inventory inventory) {
+        inventoryRepository.save(inventory);
+        return "Created Successfully";
+    }
+
+    @Override
+    @Transactional
+    public Inventory addStocksToInventory(int inventoryId, List<Stock> newStocks) {
+        Inventory existingInventory = inventoryRepository.findById(inventoryId).get();
+        
+        List<Stock> existingStocks = existingInventory.getStocks();
+        
+        for (Stock newStock : newStocks) {
+            boolean stockExists = false;
+            
+            for (Stock existingStock : existingStocks) {
+                if (existingStock.getSymbol().equals(newStock.getSymbol())) {
+                    // Update the existing stock's quantity and prices
+                    existingStock.setQuantity(existingStock.getQuantity() + newStock.getQuantity());
+                    existingStock.setPurchasePrice(newStock.getPurchasePrice());
+ 
+                    stockExists = true;
+                    break;
+                }
+            }
+            
+            if (!stockExists) {
+                // Add the new stock if it doesn't already exist in the inventory
+                existingStocks.add(newStock);
+            }
+        }
+
+        long totalInvestment = 0;
+        long currentValue = 0;
+
+        for (Stock stock : existingStocks) {
+            totalInvestment += stock.getPurchasePrice() * stock.getQuantity();
+            
+        }
+
+        // Update the inventory values
+        existingInventory.setTotalInvestment(totalInvestment);
+       
+        return inventoryRepository.save(existingInventory);
+    }
+
+    @Override
+    @Transactional
+    public int removeStockFromInventory(int inventoryId, String stockSymbol, int quantity) {
+        Inventory existingInventory = inventoryRepository.findById(inventoryId).get();
+        
+        List<Stock> stocks = existingInventory.getStocks();
+        int sellValue = 0;
+
+        for (Stock stock : stocks) {
+            if (stock.getSymbol().equals(stockSymbol)) {
+                if (stock.getQuantity() < quantity) {
+                    throw new IllegalArgumentException("Insufficient stock quantity to remove");
+                }
+                
+                StockPriceResponse stockCurrentInfo = inventoryOpenFeign.getStockPrice(stockSymbol);
+                
+                sellValue = (int) (stockCurrentInfo.getPrice() * quantity);
+                
+                if (stock.getQuantity() == quantity) {
+                    // Remove the stock completely
+                    stocks.remove(stock);
+                } else {
+                    // Update the stock quantity
+                    stock.setQuantity(stock.getQuantity() - quantity);
+                }
+                
+                break;
+            }
+        }
+
+        long totalInvestment = 0;
+
+        for (Stock stock : stocks) {
+            totalInvestment += stock.getPurchasePrice() * stock.getQuantity();
+        }
+
+        // Update the inventory values
+        existingInventory.setTotalInvestment(totalInvestment);
+       
+
+        inventoryRepository.save(existingInventory);
+
+        return sellValue;
+    }
+
+	@Override
+	public Inventory updateUserInventory(int id,Inventory inventory) {
+		
+		Inventory existingInventory = inventoryRepository.findById(id).get();
+		existingInventory.setTotalInvestment(inventory.getTotalInvestment());
+	
+		return inventoryRepository.save(existingInventory);
+	}
+}

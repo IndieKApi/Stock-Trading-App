@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="StockMicroserviceApplicationTests" project="StockMicroservice" tests="5" started="5" failures="1" errors="3" ignored="0">
+  <testsuite name="com.example.demo.StockMicroserviceApplicationTests" time="0.548" displayname="StockMicroserviceApplicationTests" uniqueid="[engine:junit-jupiter]/[class:com.example.demo.StockMicroserviceApplicationTests]">
+    <testcase name="testGetCompanyStockQuote" classname="com.example.demo.StockMicroserviceApplicationTests" time="0.249" displayname="testGetCompanyStockQuote()" uniqueid="[engine:junit-jupiter]/[class:com.example.demo.StockMicroserviceApplicationTests]/[method:testGetCompanyStockQuote()]">
+      <error>com.example.demo.exception.ResourceNotFoundException: Stock quote not found for ticker: AAPL&#13;
+	at com.example.demo.service.StockServiceImpl.getCompanyStockQuote(StockServiceImpl.java:101)&#13;
+	at com.example.demo.StockMicroserviceApplicationTests.testGetCompanyStockQuote(StockMicroserviceApplicationTests.java:103)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)&#13;
+&#13;
+</error>
+    </testcase>
+    <testcase name="testGetAllStockInExchange" classname="com.example.demo.StockMicroserviceApplicationTests" time="0.086" displayname="testGetAllStockInExchange()" uniqueid="[engine:junit-jupiter]/[class:com.example.demo.StockMicroserviceApplicationTests]/[method:testGetAllStockInExchange()]"/>
+    <testcase name="testFetchAndSaveAllStocks" classname="com.example.demo.StockMicroserviceApplicationTests" time="0.081" displayname="testFetchAndSaveAllStocks()" uniqueid="[engine:junit-jupiter]/[class:com.example.demo.StockMicroserviceApplicationTests]/[method:testFetchAndSaveAllStocks()]">
+      <failure>Wanted but not invoked:
+stockRepository.save(
+    &lt;any com.example.demo.entity.Stock&gt;
+);
+-&gt; at com.example.demo.StockMicroserviceApplicationTests.testFetchAndSaveAllStocks(StockMicroserviceApplicationTests.java:62)
+Actually, there were zero interactions with this mock.
+&#13;
+	at com.example.demo.StockMicroserviceApplicationTests.testFetchAndSaveAllStocks(StockMicroserviceApplicationTests.java:62)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)&#13;
+&#13;
+</failure>
+    </testcase>
+    <testcase name="testGetCompanyStockHistory" classname="com.example.demo.StockMicroserviceApplicationTests" time="0.041" displayname="testGetCompanyStockHistory()" uniqueid="[engine:junit-jupiter]/[class:com.example.demo.StockMicroserviceApplicationTests]/[method:testGetCompanyStockHistory()]">
+      <error>com.example.demo.exception.ResourceNotFoundException: Stock history not found for ticker: AAPL&#13;
+	at com.example.demo.service.StockServiceImpl.getCompanyStockHistory(StockServiceImpl.java:116)&#13;
+	at com.example.demo.StockMicroserviceApplicationTests.testGetCompanyStockHistory(StockMicroserviceApplicationTests.java:114)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)&#13;
+&#13;
+</error>
+    </testcase>
+    <testcase name="testGetCompanyProfile" classname="com.example.demo.StockMicroserviceApplicationTests" time="0.039" displayname="testGetCompanyProfile()" uniqueid="[engine:junit-jupiter]/[class:com.example.demo.StockMicroserviceApplicationTests]/[method:testGetCompanyProfile()]">
+      <error>com.example.demo.exception.ResourceNotFoundException: Company profile not found for ticker: AAPL&#13;
+	at com.example.demo.service.StockServiceImpl.getCompanyProfile(StockServiceImpl.java:85)&#13;
+	at com.example.demo.StockMicroserviceApplicationTests.testGetCompanyProfile(StockMicroserviceApplicationTests.java:89)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)&#13;
+&#13;
+</error>
+    </testcase>
+  </testsuite>
+</testrun>

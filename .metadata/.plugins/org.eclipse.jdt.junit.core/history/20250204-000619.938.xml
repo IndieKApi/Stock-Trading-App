@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="InventoryMicroserviceApplicationTests" project="InventoryMicroservice" tests="1" started="1" failures="0" errors="1" ignored="0">
+  <testsuite name="com.example.demo.InventoryMicroserviceApplicationTests" time="0.196" displayname="InventoryMicroserviceApplicationTests" uniqueid="[engine:junit-jupiter]/[class:com.example.demo.InventoryMicroserviceApplicationTests]">
+    <testcase name="testRemoveStockFromInventory" classname="com.example.demo.InventoryMicroserviceApplicationTests" time="0.197" displayname="testRemoveStockFromInventory()" uniqueid="[engine:junit-jupiter]/[class:com.example.demo.InventoryMicroserviceApplicationTests]/[method:testRemoveStockFromInventory()]">
+      <error>com.example.demo.exception.ResourceNotFoundException: Inventory not found for id: 1&#13;
+	at com.example.demo.service.InventoryServiceImpl.lambda$1(InventoryServiceImpl.java:91)&#13;
+	at java.base/java.util.Optional.orElseThrow(Optional.java:403)&#13;
+	at com.example.demo.service.InventoryServiceImpl.removeStockFromInventory(InventoryServiceImpl.java:91)&#13;
+	at com.example.demo.InventoryMicroserviceApplicationTests.testRemoveStockFromInventory(InventoryMicroserviceApplicationTests.java:69)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)&#13;
+&#13;
+</error>
+    </testcase>
+  </testsuite>
+</testrun>

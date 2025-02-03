@@ -1,0 +1,36 @@
+package com.example.demo.controller;
+
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.entity.Stock;
+import com.example.demo.service.StockService;
+
+import lombok.AllArgsConstructor;
+
+@RestController
+@AllArgsConstructor
+@RequestMapping("stocks")
+public class StockController {
+	
+	private StockService stockService;
+	
+	@GetMapping("/all")
+	public ResponseEntity<Void> fetchAllStocks() {
+	    stockService.fetchAndSaveAllStocks();
+	    return ResponseEntity.ok().build();
+	}
+	
+	@GetMapping("/NASDAQall")
+	public ResponseEntity<List<Stock>> fetchAllStockInNASDAQ()
+	{	
+		List<Stock> stock = stockService.getAllStockInNASDAQ();
+		return ResponseEntity.ok(stock);
+	}
+
+
+}

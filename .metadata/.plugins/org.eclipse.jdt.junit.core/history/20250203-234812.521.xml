@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="StockMicroserviceApplicationTests" project="StockMicroservice" tests="1" started="1" failures="0" errors="0" ignored="0">
+  <testsuite name="com.example.demo.StockMicroserviceApplicationTests" time="0.296" displayname="StockMicroserviceApplicationTests" uniqueid="[engine:junit-jupiter]/[class:com.example.demo.StockMicroserviceApplicationTests]">
+    <testcase name="testGetAllStockInExchange" classname="com.example.demo.StockMicroserviceApplicationTests" time="0.296" displayname="testGetAllStockInExchange()" uniqueid="[engine:junit-jupiter]/[class:com.example.demo.StockMicroserviceApplicationTests]/[method:testGetAllStockInExchange()]"/>
+  </testsuite>
+</testrun>

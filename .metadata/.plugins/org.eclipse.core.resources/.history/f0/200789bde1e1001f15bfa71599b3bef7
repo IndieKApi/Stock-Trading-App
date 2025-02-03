@@ -1,0 +1,22 @@
+package com.example.demo.openfeign;
+
+import java.util.List;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.example.demo.entity.Stock;
+
+
+@FeignClient(name = "PORTFOLIOMICROSERVICE")
+public interface OrderOpenFeignClient {
+    @PostMapping("/inventory/add-stocks/{portfolioId}")
+    void addStockToPortfolio(@PathVariable int portfolioId, @RequestBody List<Stock> stock);
+
+    @DeleteMapping("/inventory/remove-stock/{portfolioId}")
+    Integer removeStockFromPortfolio(@PathVariable int portfolioId, @RequestParam String stockSymbol, @RequestParam String stockQuantity);
+}

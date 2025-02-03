@@ -1,0 +1,5 @@
+package com.example.demo.openfeign;
+
+public interface InventoryOpenFeign {
+
+}

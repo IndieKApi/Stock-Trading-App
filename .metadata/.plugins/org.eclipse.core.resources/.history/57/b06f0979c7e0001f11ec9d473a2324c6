@@ -1,0 +1,55 @@
+package com.example.demo.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.entity.CompanyProfile;
+import com.example.demo.entity.Stock;
+import com.example.demo.feignclient.StockClient;
+import com.example.demo.repository.AllStockDataRepo;
+//import com.example.demo.repository.CompanyProfileRepo;
+
+
+@Service
+public class StockServiceImpl implements StockService {
+	
+	@Autowired
+	private StockClient stockClient;
+	
+	
+	@Value("${stock.api.key}")
+    private String apiKey;
+	
+	@Autowired
+	private AllStockDataRepo stockRepository;
+	
+//	@Autowired
+//	private CompanyProfileRepo companyProfileRepo;
+
+	@Override
+	public void fetchAndSaveAllStocks() {
+		List<Stock> stocks = stockClient.getAllStocks(apiKey);
+		stockRepository.saveAll(stocks);
+	}
+
+
+	@Override
+	public List<Stock> getAllStockInExchnage(String exchnage) {
+		return stockRepository.findByExchangeShortName(exchnage);
+	}
+
+
+	@Override
+	public CompanyProfile getCompanyProfile(String ticker) {
+		
+		List<CompanyProfile> companyProfiles = stockClient.getCompanyProfile(ticker,apiKey);
+		
+		return companyProfiles.get(0);
+		
+		
+	}
+
+}
