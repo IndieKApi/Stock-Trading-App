@@ -10,12 +10,14 @@ import com.example.demo.entity.Order;
 import com.example.demo.entity.Stock;
 import com.example.demo.service.OrderService;
 
+import lombok.AllArgsConstructor;
+
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/order")
 public class OrderController {
 
-    @Autowired
     private OrderService orderService;
 
     @PostMapping("/buy-stock/{portfolioId}")

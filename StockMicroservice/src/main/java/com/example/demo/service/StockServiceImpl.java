@@ -86,6 +86,7 @@ public class StockServiceImpl implements StockService {
             }
             companyProfileRepo.save(companyProfiles.get(0));
             return companyProfileRepo.findBySymbol(ticker);
+            
         } catch (ResourceNotFoundException e) {
             throw e;
         } catch (Exception e) {

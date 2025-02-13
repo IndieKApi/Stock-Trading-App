@@ -15,19 +15,21 @@ import com.example.demo.exception.OrderNotFoundException;
 import com.example.demo.openfeign.OrderOpenFeignClient;
 import com.example.demo.repository.OrderRepository;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
-	@Autowired
-	private OrderOpenFeignClient portfolioClient;
+	
+	private OrderOpenFeignClient inventoryClient;
 
-	@Autowired
 	private OrderRepository orderRepository;
 
 	@Override
 	public Order buyStock(int portfolioId, List<Stock> stock) {
 		try {
-			Inventory inventory = portfolioClient.addStockToPortfolio(portfolioId, stock);
+			Inventory inventory = inventoryClient.addStockToPortfolio(portfolioId, stock);
 
 			// Save the order details
 			Order order = new Order();
@@ -50,7 +52,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public Order sellStock(int portfolioId, String stockSymbol, int stockQuantity) {
 		try {
-			StockSellDTO dto = portfolioClient.removeStockFromPortfolio(portfolioId, stockSymbol, stockQuantity);
+			StockSellDTO dto = inventoryClient.removeStockFromPortfolio(portfolioId, stockSymbol, stockQuantity);
 
 			// Save the order details
 			Order order = new Order();

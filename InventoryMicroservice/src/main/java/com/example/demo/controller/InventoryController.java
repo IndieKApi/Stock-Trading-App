@@ -14,7 +14,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("inventory")
+@RequestMapping("/inventory")
 public class InventoryController {
 
     private InventoryService inventoryService;

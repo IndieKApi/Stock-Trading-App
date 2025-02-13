@@ -58,5 +58,16 @@ class OrderMicroserviceApplicationTests {
        
         verify(orderRepository, times(1)).findByUserId(anyInt());
     }
+    
+    @Test
+    void testforBuyOrder()
+    {
+    	Order buyOrder = new Order();
+    	
+    	buyOrder.setOrderType("BUY");
+    	
+    	assertEquals("BUY",buyOrder.getOrderType());
+    	
+    }
 
 }

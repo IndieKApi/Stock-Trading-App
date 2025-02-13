@@ -15,13 +15,16 @@ import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.openfeign.InventoryOpenFeign;
 import com.example.demo.repository.StockInventoryRepository;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class InventoryServiceImpl implements InventoryService {
 
-	@Autowired
+	
 	private InventoryOpenFeign inventoryOpenFeign;
 
-	@Autowired
+	
 	private StockInventoryRepository inventoryRepository;
 
 	@Override
@@ -101,7 +104,7 @@ public class InventoryServiceImpl implements InventoryService {
 					throw new IllegalArgumentException("Insufficient stock quantity to Sell");
 				}
 
-				sellValue =  (stockCurrentInfo.getPrice());
+				sellValue =  quantity * (stockCurrentInfo.getPrice());
 
 				if (stock.getQuantity() == quantity) {
 					// Remove the stock completely
