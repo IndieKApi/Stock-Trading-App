@@ -1,9 +1,0 @@
-package com.example.demo.service;
-
-public interface InventoryService {
-
-	List<Inventory> getAllUserInventories(int userId);
-    String createUserInventory(Inventory inventory);
-    Inventory addStocksToInventory(int inventoryId, List<Stock> stocks);
-    Inventory removeStockFromInventory(int inventoryId, String stockSymbol);
-}

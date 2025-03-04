@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.entity.Inventory;
+import com.example.demo.entity.InventoryCreation;
 import com.example.demo.entity.Stock;
 import com.example.demo.entity.StockSellDTO;
 import com.example.demo.service.InventoryService;
@@ -24,10 +25,17 @@ public class InventoryController {
         List<Inventory> inventories = inventoryService.getAllUserInventories(userId);
         return ResponseEntity.ok(inventories);
     }
+    
 
     @PostMapping("/new")
-    public ResponseEntity<String> createUserInventory(@RequestBody Inventory inventory) {
-        return ResponseEntity.ok(inventoryService.createUserInventory(inventory));
+    public ResponseEntity<InventoryCreation> createUserInventory(@RequestBody Inventory inventory) {
+        Inventory createdInventory = inventoryService.createUserInventory(inventory);
+    	
+    	InventoryCreation creation = new InventoryCreation();
+        creation.setMsg("Created Successfully");
+        creation.setInventoryId(createdInventory.getInventoryId());
+        
+    	return ResponseEntity.ok(creation);
     }
     
     @PutMapping("/update/{id}")

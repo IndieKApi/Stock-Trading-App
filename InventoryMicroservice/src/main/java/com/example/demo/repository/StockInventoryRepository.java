@@ -8,4 +8,5 @@ import com.example.demo.entity.Inventory;
 
 public interface StockInventoryRepository extends JpaRepository<Inventory, Integer> {
     List<Inventory> findByUserId(int userId);
+   
 }

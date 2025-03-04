@@ -53,7 +53,8 @@ public class OrderServiceImpl implements OrderService {
 	public Order sellStock(int portfolioId, String stockSymbol, int stockQuantity) {
 		try {
 			StockSellDTO dto = inventoryClient.removeStockFromPortfolio(portfolioId, stockSymbol, stockQuantity);
-
+			
+			System.out.println(dto);
 			// Save the order details
 			Order order = new Order();
 			order.setUserId(dto.getUserId());

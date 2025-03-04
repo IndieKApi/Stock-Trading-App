@@ -21,32 +21,28 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class InventoryServiceImpl implements InventoryService {
 
-	
 	private InventoryOpenFeign inventoryOpenFeign;
 
-	
 	private StockInventoryRepository inventoryRepository;
 
 	@Override
 	public List<Inventory> getAllUserInventories(int userId) {
-	    try {
-	        List<Inventory> userInventory = inventoryRepository.findByUserId(userId);
+		try {
+			List<Inventory> userInventory = inventoryRepository.findByUserId(userId);
 
-	        if (userInventory.isEmpty()) {
-	            throw new ResourceNotFoundException("No inventory found for user with ID: " + userId);
-	        }
+			if (userInventory.isEmpty()) {
+				throw new ResourceNotFoundException("No inventory found for user with ID: " + userId);
+			}
 
-	        return userInventory;
-	    } catch (Exception e) {
-	        throw new RuntimeException("Failed to fetch inventory for user with ID: " + userId, e);
-	    }
+			return userInventory;
+		} catch (Exception e) {
+			throw new RuntimeException("Failed to fetch inventory for user with ID: " + userId, e);
+		}
 	}
 
-
 	@Override
-	public String createUserInventory(Inventory inventory) {
-		inventoryRepository.save(inventory);
-		return "Created Successfully";
+	public Inventory createUserInventory(Inventory inventory) {
+		return inventoryRepository.save(inventory);
 	}
 
 	@Override
@@ -92,9 +88,9 @@ public class InventoryServiceImpl implements InventoryService {
 	public StockSellDTO removeStockFromInventory(int inventoryId, String stockSymbol, int quantity) {
 		Inventory existingInventory = inventoryRepository.findById(inventoryId)
 				.orElseThrow(() -> new ResourceNotFoundException("Inventory not found for id: " + inventoryId));
-		
+
 		CompanyInfoResponse stockCurrentInfo = inventoryOpenFeign.getCompanyInfo(stockSymbol);
-		
+
 		List<Stock> stocks = existingInventory.getStocks();
 		Double sellValue = 0.0;
 
@@ -103,8 +99,10 @@ public class InventoryServiceImpl implements InventoryService {
 				if (stock.getQuantity() < quantity) {
 					throw new IllegalArgumentException("Insufficient stock quantity to Sell");
 				}
+				
+				System.out.println(stock.getQuantity() + " this is my stock quantity and this is quantoty to sell "+ quantity);
 
-				sellValue =  quantity * (stockCurrentInfo.getPrice());
+				sellValue = quantity * (stockCurrentInfo.getPrice());
 
 				if (stock.getQuantity() == quantity) {
 					// Remove the stock completely
@@ -115,6 +113,10 @@ public class InventoryServiceImpl implements InventoryService {
 				}
 
 				break;
+			}
+			else
+			{
+				throw new IllegalArgumentException("Insufficient stock quantity to Sell");
 			}
 		}
 
@@ -128,9 +130,9 @@ public class InventoryServiceImpl implements InventoryService {
 		existingInventory.setTotalInvestment(totalInvestment);
 
 		Inventory userInventory = inventoryRepository.save(existingInventory);
-		
+
 		StockSellDTO stockSellObj = new StockSellDTO();
-		
+
 		stockSellObj.setInventoryId(inventoryId);
 		stockSellObj.setUserId(userInventory.getUserId());
 		stockSellObj.setSellValue(sellValue);
@@ -138,7 +140,7 @@ public class InventoryServiceImpl implements InventoryService {
 		stockSellObj.setStockname(stockCurrentInfo.getCompanyName());
 		stockSellObj.setStockQuantity(quantity);
 		stockSellObj.setStocksellPrice(stockCurrentInfo.getPrice());
-		
+
 		return stockSellObj;
 	}
 
@@ -151,4 +153,5 @@ public class InventoryServiceImpl implements InventoryService {
 
 		return inventoryRepository.save(existingInventory);
 	}
+
 }

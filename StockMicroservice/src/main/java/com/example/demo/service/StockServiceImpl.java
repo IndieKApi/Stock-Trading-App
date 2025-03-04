@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,8 @@ public class StockServiceImpl implements StockService {
             List<Stock> nasdaqStocks = allStocks.stream()
                 .filter(stock -> "NASDAQ".equalsIgnoreCase(stock.getExchangeShortName()))
                 .collect(Collectors.toList());
-
+            
+      
             for (Stock stock : nasdaqStocks) {
                 Optional<Stock> existingStock = stockRepository.findBySymbol(stock.getSymbol());
                 if (existingStock.isPresent()) {
@@ -123,4 +125,26 @@ public class StockServiceImpl implements StockService {
             throw new ServiceException("Failed to fetch stock history for ticker: " + ticker, e);
         }
     }
+
+
+	@Override
+	public List<Stock> getTop20Stocks(){
+		
+		try {
+			return stockRepository.findTop20Stocks();
+		}
+		catch (Exception e) {
+			throw e;
+		}
+		
+		
+	}
+
+
+	@Override
+	public double getCurrentPrice(String ticker) {
+		
+		Optional<Stock> stock = stockRepository.findBySymbol(ticker);
+		return stock.get().getPrice();
+	}
 }

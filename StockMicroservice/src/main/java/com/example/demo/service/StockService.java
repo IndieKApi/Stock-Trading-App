@@ -18,5 +18,9 @@ public interface StockService {
 	public StockQuote getCompanyStockQuote(String ticker);
 	
 	public CompanyStockHistory getCompanyStockHistory(String ticker);
+
+	public List<Stock> getTop20Stocks();
+	
+	public double getCurrentPrice(String ticker);
 	
 }
