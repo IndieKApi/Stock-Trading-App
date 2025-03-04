@@ -16,7 +16,6 @@ logs/
 *.tmp
  
 # Ignore environment configuration files (optional)
-application.properties
 application.yml
 .env
 /.metadata/
