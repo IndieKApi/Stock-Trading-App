@@ -32,7 +32,7 @@ public class InventoryController {
         Inventory createdInventory = inventoryService.createUserInventory(inventory);
     	
     	InventoryCreation creation = new InventoryCreation();
-        creation.setMsg("Created Successfully");
+    	creation.setMsg("Created Successfully");
         creation.setInventoryId(createdInventory.getInventoryId());
         
     	return ResponseEntity.ok(creation);

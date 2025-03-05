@@ -52,6 +52,8 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public Order sellStock(int portfolioId, String stockSymbol, int stockQuantity) {
 		try {
+			
+//			System.out.println(stockQuantity);
 			StockSellDTO dto = inventoryClient.removeStockFromPortfolio(portfolioId, stockSymbol, stockQuantity);
 			
 			System.out.println(dto);

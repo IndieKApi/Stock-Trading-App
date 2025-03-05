@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class InventoryCreation {
-	String msg;
 	
+	String msg;
 	int inventoryId;
 }

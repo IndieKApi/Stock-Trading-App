@@ -10,17 +10,19 @@ import org.springframework.stereotype.Component;
 public class RouteValidator {
 
 
-	public static final String[] OPEN_API_ENDPOINTS = { "/auth/register", "/auth/new", "/stocks/all/NASDAQ","/stocks/top20" };
+	public static final String[] OPEN_API_ENDPOINTS = { "/inventory/new","/auth/register", "/auth/new", "/stocks/all/NASDAQ","/stocks/top20","/auth/authenticate"};
 
 	public Predicate<ServerHttpRequest> isSecured = request -> {
 		String path = request.getPath().toString();
-		System.out.println("required :-"+ path);
+		
+//		System.out.println("required :- "+ path);
 		
 		
 		for (String endpoint : OPEN_API_ENDPOINTS) {
 			
-			System.out.println(endpoint);
-			if (path.contains(endpoint)) {
+//			System.out.println(endpoint);
+			
+			if (path.equals(endpoint)) {
 				System.out.println("Not required :-"+ path);
 				return false; // Endpoint does not require authorization
 			}

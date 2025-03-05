@@ -86,21 +86,36 @@ public class InventoryServiceImpl implements InventoryService {
 
 	@Override
 	public StockSellDTO removeStockFromInventory(int inventoryId, String stockSymbol, int quantity) {
+		
+//		System.out.println("Stocks quantity to sell " + quantity + " Stock Symbol is " + stockSymbol);
+		
 		Inventory existingInventory = inventoryRepository.findById(inventoryId)
 				.orElseThrow(() -> new ResourceNotFoundException("Inventory not found for id: " + inventoryId));
-
+		
+//		System.out.println("exixting of Inventoryid "+ inventoryId + " ------------ " + existingInventory);
+		
 		CompanyInfoResponse stockCurrentInfo = inventoryOpenFeign.getCompanyInfo(stockSymbol);
 
 		List<Stock> stocks = existingInventory.getStocks();
+		
 		Double sellValue = 0.0;
+		
+		boolean stockNotFound = true;
 
 		for (Stock stock : stocks) {
+			
+//			System.out.println(stock);
+			
 			if (stock.getSymbol().equals(stockSymbol)) {
+				
+				stockNotFound = false;
+				
+				System.out.println(stock.getQuantity() + " this is my stock quantity and this is quantity to sell "+ quantity);
+				
 				if (stock.getQuantity() < quantity) {
 					throw new IllegalArgumentException("Insufficient stock quantity to Sell");
 				}
 				
-				System.out.println(stock.getQuantity() + " this is my stock quantity and this is quantoty to sell "+ quantity);
 
 				sellValue = quantity * (stockCurrentInfo.getPrice());
 
@@ -114,10 +129,12 @@ public class InventoryServiceImpl implements InventoryService {
 
 				break;
 			}
-			else
-			{
-				throw new IllegalArgumentException("Insufficient stock quantity to Sell");
-			}
+			
+		}
+		
+		if(stockNotFound)
+		{
+			throw new IllegalArgumentException("Insufficient stock quantity to Sell");
 		}
 
 		long totalInvestment = 0;
